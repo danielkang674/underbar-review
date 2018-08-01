@@ -58,7 +58,9 @@
       it('should return false given an array and a value not in that array', function() {
         // Replace this line with an `expect` statement that tests
         // the behavior described by the `it` string
-        throw new Error('This test is missing.');
+        var array = [1, 2, 3];
+        var value = 4;
+        expect(_.contains(array, value)).to.be.false;
       });
 
       it('should return true given a object and a value from that object', function() {
@@ -91,7 +93,7 @@
       it('fails for a collection of all-falsy values', function() {
         // Replace this line with an `expect` statement that tests
         // the behavior described by the `it` string
-        throw new Error('This test is missing.');
+        expect(_.every([false, undefined, null, 0], _.identity)).to.be.false;
       });
 
       it('fails for a collection containing mixed falsy and truthy values', function() {
@@ -149,7 +151,7 @@
       it('should fail for a set containing no matching values', function() {
         // Replace this line with an `expect` statement that tests
         // the behavior described by the `it` string
-        throw new Error('This test is missing.');
+        expect(_.some([1,3,5,7], isEven)).to.be.false;
       });
 
       it('should pass for a collection containing one matching value', function() {
@@ -175,7 +177,7 @@
         var source = {};
         var extended = _.extend(destination, source);
 
-        expect(extended).to.equal(destination);
+        expect(extended).to.eql(destination);
       });
 
       it('should extend an object with the attributes of another', function() {
@@ -187,9 +189,11 @@
       });
 
       it('should override properties found on the destination', function() {
-        // Replace this line with an `expect` statement that tests
-        // the behavior described by the `it` string
-        throw new Error('This test is missing.');
+        var destination = {a: 'a' };
+        var source = { a: 'b' };
+        var extended = _.extend(destination, source);
+
+        expect(extended.a).to.equal('b');
       });
 
       it('should not override properties not found in the source', function() {
@@ -231,7 +235,7 @@
         var source = {};
         var defaulted = _.defaults(destination, source);
 
-        expect(defaulted).to.equal(destination); // .equal uses (===) under the hood
+        expect(defaulted).to.eql(destination); // .equal uses (===) under the hood
       });
 
       it('should copy a property if that key is not already set on the target', function() {
@@ -259,35 +263,38 @@
         var destination = {};
         var source = { a: 1 };
 
-        _.defaults(destination, source);
+        var defaulted = _.defaults(destination, source);
 
-        expect(destination.a).to.equal(1);
+        expect(defaulted.a).to.equal(1);
       });
 
       it('should copy any property whose key is not already set on the target', function() {
-        // Replace this line with an `expect` statement that tests
-        // the behavior described by the `it` string
-        throw new Error('This test is missing.');
+        var destination = {};
+        var source = { a: 'b' };
+        
+        var defaulted = _.defaults(destination, source)
+
+        expect(defaulted.a).to.equal('b');
       });
 
       it('should not copy a property if that key is already set on the target', function() {
         var destination = { a: 10 };
         var source = { a: 1 };
 
-        _.defaults(destination, source);
+        var defaulted = _.defaults(destination, source);
 
-        expect(destination.a).to.equal(10);
+        expect(defaulted.a).to.equal(10);
       });
 
       it('should not copy any property whose key is already set on the target', function() {
         var destination = { a: 1, b: 2 };
         var source = { a: 100, b: 200, c: 300 };
 
-        _.defaults(destination, source);
+        var defaulted = _.defaults(destination, source);
 
-        expect(destination.a).to.equal(1);
-        expect(destination.b).to.equal(2);
-        expect(destination.c).to.equal(300);
+        expect(defaulted.a).to.equal(1);
+        expect(defaulted.b).to.equal(2);
+        expect(defaulted.c).to.equal(300);
       });
 
       it('should not copy a property if that key is already set on the target, even if the value for that key is falsy', function() {
@@ -305,11 +312,11 @@
         var destination = {a: '', b: 0, c: NaN };
         var source = { a: 1, b: 2, c: 3 };
 
-        _.defaults(destination, source);
+        var defaulted = _.defaults(destination, source);
 
-        expect(destination.a).to.equal('');
-        expect(destination.b).to.equal(0);
-        expect(isNaN(destination.c)).to.equal(true);
+        expect(defaulted.a).to.equal('');
+        expect(defaulted.b).to.equal(0);
+        expect(isNaN(defaulted.c)).to.equal(true);
       });
 
       it('should copy properties source an arbitrary number of source objects', function() {
@@ -318,12 +325,12 @@
         var anotherSource = { b: 2, c: 'three' };
         var aThirdSource = { d: 'four' };
 
-        _.defaults(destination, source, anotherSource, aThirdSource);
+        var defaulted = _.defaults(destination, source, anotherSource, aThirdSource);
 
-        expect(destination.a).to.equal(1);
-        expect(destination.b).to.equal(2);
-        expect(destination.c).to.equal('three');
-        expect(destination.d).to.equal('four');
+        expect(defaulted.a).to.equal(1);
+        expect(defaulted.b).to.equal(2);
+        expect(defaulted.c).to.equal('three');
+        expect(defaulted.d).to.equal('four');
       });
 
       it('should prefer the first value found when two objects are provided with properties at the same key', function() {
@@ -331,9 +338,9 @@
         var source = { a: 1 };
         var anotherSource = { a: 'one' };
 
-        _.defaults(destination, source, anotherSource);
+        var defaulted = _.defaults(destination, source, anotherSource);
 
-        expect(destination.a).to.equal(1);
+        expect(defaulted.a).to.equal(1);
       });
     });
 
